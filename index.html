@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en-US">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<title>YouTube API Data with JSON - Live Demo</title>
+		<link rel="stylesheet" type="text/css"  href="css/youtube_specific.css">
+		<link rel="stylesheet" type="text/css" href="source/jquery.fancybox.css?v=2.1.5" media="screen" />
+	</head>
+	<body>	
+		<div class="header">
+			<div id="search-bar">
+				
+				<input id="searchText" class="youtubeSearchInput" type="text" name="q" placeholder="Search Video">
+				<button id="searchButton">SEARCH</button>
+			</div>
+			
+			<img src="" id="userPic">
+			<span id="userName"></span>
+			<button id="apps" class="sprite"></button>
+			
+		</div>
+		<div id="nav_container">
+			<div id="nav_triangle"></div>
+			<div id="apps_container">
+				<ul>
+					<li id="popular">
+						<div id="pop" class="sprite"></div>
+							<span>Popular Videos</span>
+					</li>
+					<li id="feeds"  >
+						<div id="fee" class="sprite"></div>
+							<span>Feeds</span>
+						
+					</li>
+					<li id="watchLater">
+						<div id="wat" class="sprite"></div>
+							<span>Watch later</span>
+					
+					</li>
+					<li id="watchHistory"  >
+						<div id="wah" class="sprite"></div>
+							<span>Watch history</span>
+				
+					</li>
+					<li  id="myUploads" >
+						<div id="myU" class="sprite"></div>
+							<span>My uploads</span>
+					
+					</li>
+					<li id="liked">
+						<div id="lik" class="sprite"></div>
+						
+							<span>Liked Videos</span>
+					</li>	
+				</ul>
+
+			</div>
+		</div>
+		<div id="hideBeforeLogin"> <h3>Please Login to use</h3></div>
+		<div id="login_wrapper" class="pre-auth">
+			<div id="login-container">
+				<h3>This Web-application requires login with a Youtube account , to login Click on the Google icon below <span id="login"></span> </h3>
+      			<div id="login_link"></div>
+    		</div> 
+		</div>
+
+		</div>
+		<div id="video_cateogry_wrapper"><span></span></div>
+		<div id="video-container">		
+		      <ul class="searchedVideos">
+		      	
+		     </ul>
+
+  		</div>
+  		
+  		
+  		<div class="button-container">
+	      <button id="prev-button" class="paging-button" onclick="previousPage();">Previous Page</button>
+	      <button id="next-button" class="paging-button" onclick="nextPage();">Next Page</button>
+    	</div>
+    	<div id="tooltip_container">dfgsdf</div>
+    	<script id="Searchtemplate" type="text/x-handlebars-template"> 		
+	      	<li class="video_card effect6">
+	      		<div class="videothumb" id="{{videoId}}" style="background-image:url({{thumbnailUrl}})"
+	      			data-tip-iframe="{{player}}">
+	      			<button class="play_button sprite"></button>
+	      			<span class="views_count blue">{{viewCount}} &nbsp; views</span>
+	      			<a class="various fancybox.iframe videoIframe" href={{url}}></a>
+	      		</div>
+	      		<div class="title_container">
+	      			<div class="meta_triangle"> </div>
+	      			<button class="show_hidden_part sprite"></button>
+		      		<div class=" title tooltip" data-tip-type="text" data-tip-source="{{title}}">{{title}}</div>
+	      		</div>
+	      		<div class="hidden_part_of_card">
+	      		<button id="removeMetaData" class="sprite"></button>
+    				<div id="meta_data_container">
+    					<a class="various fancybox.iframe videoIframe sprite" href={{url}} ></a>
+			      		<div class="image_holder" data-tip-image="{{highResImg}}" 
+			      			style="background:url({{highResImg}});background-position: 0px -45px;">
+			      			
+			      		</div>
+			      		<div class="metaData">
+		      				<div class="title tooltip" data-tip-type="text" data-tip-source="{{title}}">
+		      					{{title}}
+		      				</div>
+	      					
+	      					<div class="credits">
+	      						<a href="{{watchOnYoutube}}" class="external tooltip sprite" target="_blank" 
+	      						id="watch_on_youtube"
+	      						  data-tip-type="text" data-tip-source="Watch on youtube">
+								</a>
+	      						<a src="#">{{channelTitle}}</a>&nbsp;&nbsp;
+		      					<div class="date_icon sprite"></div><span class="date">{{publishedAt}}<span>
+	      					</div>
+      		
+				      		<div class="updates">
+					      		<button class="like_button tooltip sprite" data-tip-type="text" data-tip-source="Likes">
+					      		</button><span class="like_count green">{{likeCount}}</span>
+
+					      		<button class="dislike_button tooltip sprite" data-tip-type="text" data-tip-source="Dislikes">
+					      		</button><span class="dislike_count red">{{dislikeCount}}</span>
+					      		<button class="views_count_button tooltip sprite" data-tip-type="text" data-tip-source="Total views">
+					      		</button><span class="views_count blue">{{viewCount}}</span>
+				      		</div>
+
+	      					<div class="description">
+	      						<blockquote class="bq3">
+	      							<p>{{description}}</p>
+	      						</blockquote> 
+	      					</div>
+      						<button class="readMore tooltip sprite" data-tip-type="text" data-tip-source="{{description}}"></button> 
+      					</div>
+		    		</div>
+		    	</div>
+	    	</li>
+		</script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script src="http://cloud.github.com/downloads/wycats/handlebars.js/handlebars-1.0.0.beta.6.js"></script>
+		<script type="text/javascript" src="includes/api.js"></script>
+		<script src="https://apis.google.com/js/client.js?onload=callback"></script>
+		<!--<script type="text/javascript" src="includes/tooltip.js"></script>-->
+		<!--<script type="text/javascript" src="includes/light_box_plugin.js"></script>-->
+		<script type="text/javascript" src="source/jquery.fancybox.js?v=2.1.5"></script>
+	</body>
+</html>
